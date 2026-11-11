@@ -26,6 +26,9 @@ const posts = Object.values(import.meta.glob("./writing/*.md", { eager: true }))
     <p><span class="dot" aria-hidden="true"></span><a href={building.url}><strong>{building.name}</strong></a> <span class="muted small">{building.status}</span></p>
     <p>{building.problem}</p>
     <p class="muted small">{building.stack.join(" · ")}</p>
+    {building.side && (
+      <p class="muted small">on the side: <strong>{building.side.name}</strong>, {building.side.text}</p>
+    )}
   </section>
 
   <section aria-labelledby="shipped">
@@ -35,7 +38,7 @@ const posts = Object.values(import.meta.glob("./writing/*.md", { eager: true }))
         <li>
           <span class="n">{String(i + 1).padStart(2, "0")}</span>
           <div>
-            <a href={p.url}>{p.name}</a>, {p.what}
+            {p.url ? <a href={p.url}>{p.name}</a> : <strong>{p.name}</strong>}, {p.what}
             <div class="muted small">{p.proof}</div>
           </div>
         </li>
