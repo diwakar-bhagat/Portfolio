@@ -1,0 +1,28 @@
+---
+import "../styles/global.css";
+import { site } from "../data/site";
+
+interface Props { title?: string; description?: string; }
+const { title, description = site.focus } = Astro.props;
+const fullTitle = title ? `${title} · ${site.name}` : site.name;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <main>
+      <slot />
+      <footer class="muted small">
+        updated {site.updated} · static html, no trackers
+      </footer>
+    </main>
+  </body>
+</html>
