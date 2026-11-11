@@ -5,8 +5,11 @@ import { recentRepos } from "../data/github";
 
 const repos = await recentRepos();
 
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const withBase = (u: string) => (u.startsWith(base + "/") ? u : base + u);
+
 const posts = Object.values(import.meta.glob("./writing/*.md", { eager: true }))
-  .map((p: any) => ({ ...p.frontmatter, url: p.url }))
+  .map((p: any) => ({ ...p.frontmatter, url: withBase(p.url) }))
   .filter((p) => !p.draft)
   .sort((a, b) => (a.date < b.date ? 1 : -1));
 ---
