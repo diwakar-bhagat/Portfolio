@@ -1,42 +1,43 @@
 // All the content of the home page lives here. Edit this file, not the page.
-// Anything in [brackets] is a placeholder waiting for real details.
 
 export const site = {
-  name: "[Your Name]",
-  focus: "[One sentence on what you're building right now and for whom.]",
+  name: "Diwakar Bhagat",
+  focus:
+    "AI Engineer at ZenZebra. I build AI native systems that keep D2C retail running, and I took Pine Labs payments live in production on Odoo 19 POS.",
   links: [
-    { label: "github", href: "https://github.com/rawatankit006" },
-    { label: "x", href: "https://x.com/[handle]" },
-    { label: "email", href: "mailto:[you@example.com]" },
+    { label: "github", href: "https://github.com/diwakar-bhagat" },
+    { label: "linkedin", href: "https://www.linkedin.com/in/diwakarbhagat" },
+    { label: "email", href: "mailto:diwakarbhagat.pro@gmail.com" },
   ],
-  updated: "2026-11-11",
+  updated: "2026-11-12",
 };
 
 export const building = {
-  name: "[Flagship project]",
+  name: "HireOX.AI",
   status: "live", // or "building"
-  problem: "[One sentence: the problem it solves and who has it.]",
-  url: "https://[project-url]",
-  stack: ["[astro]", "[cloudflare]", "[postgres]"],
+  problem:
+    "People prepare for interviews alone and freeze when it counts. HireOX gives them AI mock interviews with structured scoring on every answer, so practice feels like the real thing.",
+  url: "https://hireox.in",
+  stack: ["react", "node.js", "postgres", "openrouter"],
 };
 
 export const shipped: { name: string; url: string; what: string; proof: string }[] = [
   {
-    name: "[Project one]",
-    url: "https://[url]",
-    what: "[What it does in one line.]",
-    proof: "[a number: users / stars / MRR / merged PR]",
+    name: "ZenZebra payments",
+    url: "https://zenzebra.in",
+    what: "Pine Labs payments on Odoo 19 POS: terminal and dynamic QR flows, with results written straight back into the POS.",
+    proof: "live in production stores",
   },
   {
-    name: "[Project two]",
-    url: "https://[url]",
-    what: "[What it does in one line.]",
-    proof: "[a number or the raw URL]",
+    name: "Pine Labs MCP",
+    url: "https://github.com/diwakar-bhagat",
+    what: "An MCP server that brings Pine Labs payment workflows to AI agents.",
+    proof: "built and in use",
   },
   {
-    name: "[Project three]",
-    url: "https://[url]",
-    what: "[What it does in one line.]",
-    proof: "[a number or the raw URL]",
+    name: "ZenZebra D2C shop",
+    url: "https://shop.zenzebra.in",
+    what: "The direct to consumer storefront for ZenZebra, built and run end to end alongside a retail intelligence dashboard on live Odoo data.",
+    proof: "live",
   },
 ];
