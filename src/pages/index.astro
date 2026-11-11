@@ -1,9 +1,15 @@
 ---
 import Base from "../layouts/Base.astro";
 import { site, building, shipped } from "../data/site";
+import { recentRepos } from "../data/github";
+
+const repos = await recentRepos();
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const withBase = (u: string) => (u.startsWith(base + "/") ? u : base + u);
 
 const posts = Object.values(import.meta.glob("./writing/*.md", { eager: true }))
-  .map((p: any) => ({ ...p.frontmatter, url: p.url }))
+  .map((p: any) => ({ ...p.frontmatter, url: withBase(p.url) }))
   .filter((p) => !p.draft)
   .sort((a, b) => (a.date < b.date ? 1 : -1));
 ---
@@ -22,7 +28,17 @@ const posts = Object.values(import.meta.glob("./writing/*.md", { eager: true }))
     <h2 id="now"># now building</h2>
     <p><span class="dot" aria-hidden="true"></span><a href={building.url}><strong>{building.name}</strong></a> <span class="muted small">{building.status}</span></p>
     <p>{building.problem}</p>
+    {building.sites && (
+      <p class="links small">
+        {building.sites.map((l, i) => (
+          <>{i > 0 && <span> / </span>}<a href={l.href}>{l.label}</a></>
+        ))}
+      </p>
+    )}
     <p class="muted small">{building.stack.join(" · ")}</p>
+    {building.side && (
+      <p class="muted small">on the side: <strong>{building.side.name}</strong>, {building.side.text}</p>
+    )}
   </section>
 
   <section aria-labelledby="shipped">
@@ -32,13 +48,30 @@ const posts = Object.values(import.meta.glob("./writing/*.md", { eager: true }))
         <li>
           <span class="n">{String(i + 1).padStart(2, "0")}</span>
           <div>
-            <a href={p.url}>{p.name}</a>, {p.what}
+            {p.url ? <a href={p.url}>{p.name}</a> : <strong>{p.name}</strong>}, {p.what}
             <div class="muted small">{p.proof}</div>
           </div>
         </li>
       ))}
     </ol>
   </section>
+
+  {repos.length > 0 && (
+    <section aria-labelledby="github">
+      <h2 id="github"># recent on github</h2>
+      <ul class="writing">
+        {repos.map((r) => (
+          <li>
+            <span class="muted small">{r.pushed}</span>
+            <div>
+              <a href={r.url}>{r.name}</a>{r.stars > 0 && <span class="muted small"> ★ {r.stars}</span>}
+              {r.description && <div class="muted small">{r.description}</div>}
+            </div>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
 
   {posts.length > 0 && (
     <section aria-labelledby="writing">

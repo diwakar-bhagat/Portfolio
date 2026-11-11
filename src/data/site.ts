@@ -4,6 +4,7 @@ export const site = {
   name: "Diwakar Bhagat",
   focus:
     "AI Engineer at ZenZebra. I build AI native systems that keep D2C retail running, and I took Pine Labs payments live in production on Odoo 19 POS.",
+  githubUser: "diwakar-bhagat", // feeds the "# recent on github" section
   links: [
     { label: "github", href: "https://github.com/diwakar-bhagat" },
     { label: "linkedin", href: "https://www.linkedin.com/in/diwakarbhagat" },
@@ -21,7 +22,7 @@ export const building = {
   stack: ["react", "node.js", "postgres", "openrouter"],
 };
 
-export const shipped: { name: string; url: string; what: string; proof: string }[] = [
+export const shipped: { name: string; url?: string; what: string; proof: string }[] = [
   {
     name: "ZenZebra payments",
     url: "https://zenzebra.in",

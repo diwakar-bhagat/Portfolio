@@ -1,9 +1,10 @@
 ---
 import Base from "./Base.astro";
 const { frontmatter } = Astro.props;
+const home = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 ---
 <Base title={frontmatter.title} description={frontmatter.description}>
-  <p class="small"><a href="/">← home</a></p>
+  <p class="small"><a href={home}>← home</a></p>
   <article>
     <h1>{frontmatter.title}</h1>
     <p class="muted small">{frontmatter.date}</p>
