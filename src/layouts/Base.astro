@@ -3,9 +3,37 @@ import "../styles/global.css";
 import { site } from "../data/site";
 
 interface Props { title?: string; description?: string; }
-const { title, description = site.focus } = Astro.props;
-const base = import.meta.env.BASE_URL.replace(/\/$/, "");
-const fullTitle = title ? `${title} · ${site.name}` : site.name;
+const { title, description = site.description } = Astro.props;
+const fullTitle = title ? `${title} · ${site.name}` : `${site.name} · AI Engineer at ZenZebra`;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL("/og.jpg", Astro.site).href;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      name: site.name,
+      url: "https://diwakarbhagat.com/",
+      image: ogImage,
+      jobTitle: "AI Engineer",
+      email: "mailto:diwakarbhagat.pro@gmail.com",
+      worksFor: { "@type": "Organization", name: "ZenZebra", url: "https://zenzebra.in" },
+      address: { "@type": "PostalAddress", addressLocality: "New Delhi", addressCountry: "IN" },
+      sameAs: [
+        "https://www.linkedin.com/in/diwakarbhagat",
+        "https://github.com/diwakar-bhagat",
+        "https://hireox.in",
+      ],
+      knowsAbout: ["Artificial Intelligence", "Payments", "Odoo", "Full Stack Development"],
+    },
+    {
+      "@type": "WebSite",
+      name: site.name,
+      url: "https://diwakarbhagat.com/",
+    },
+  ],
+};
 ---
 <!doctype html>
 <html lang="en">
@@ -14,9 +42,30 @@ const fullTitle = title ? `${title} · ${site.name}` : site.name;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content={site.name} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f6f6ef" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0c0d0e" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:url" content={canonical} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
-    <link rel="icon" href={`${base}/favicon.svg`} type="image/svg+xml" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Diwakar Bhagat, AI Engineer at ZenZebra" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body>
     <main>
