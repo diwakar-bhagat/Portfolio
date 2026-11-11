@@ -25,6 +25,13 @@ const posts = Object.values(import.meta.glob("./writing/*.md", { eager: true }))
     <h2 id="now"># now building</h2>
     <p><span class="dot" aria-hidden="true"></span><a href={building.url}><strong>{building.name}</strong></a> <span class="muted small">{building.status}</span></p>
     <p>{building.problem}</p>
+    {building.sites && (
+      <p class="links small">
+        {building.sites.map((l, i) => (
+          <>{i > 0 && <span> / </span>}<a href={l.href}>{l.label}</a></>
+        ))}
+      </p>
+    )}
     <p class="muted small">{building.stack.join(" · ")}</p>
     {building.side && (
       <p class="muted small">on the side: <strong>{building.side.name}</strong>, {building.side.text}</p>

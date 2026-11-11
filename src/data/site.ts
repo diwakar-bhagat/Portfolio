@@ -18,8 +18,12 @@ export const building = {
   name: "ZenZebra retail stack",
   status: "live", // or "building"
   problem:
-    "Lifestyle stores inside coworking spaces, where every bill, payment and stock movement has to land in the right place the moment it happens. I own the layer that connects it all and lead a three-person team.",
-  url: "https://zenzebra.in",
+    "Four lifestyle stores inside offices, coworking floors and clubs across Noida and Gurugram, where every bill, payment and stock movement has to land in the right place the moment it happens. I own the layer that connects it all and lead a three-person team.",
+  url: "https://www.zenzebra.in/",
+  sites: [
+    { label: "zenzebra.in", href: "https://www.zenzebra.in/" },
+    { label: "shop.zenzebra.in", href: "https://shop.zenzebra.in/" },
+  ],
   stack: ["odoo 19", "next.js", "neon postgres", "pine labs", "whatsapp webhooks"],
   side: {
     name: "Insee",
