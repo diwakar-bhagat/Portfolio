@@ -1,6 +1,9 @@
 ---
 import Base from "../layouts/Base.astro";
 import { site, building, shipped } from "../data/site";
+import { recentRepos } from "../data/github";
+
+const repos = await recentRepos();
 
 const posts = Object.values(import.meta.glob("./writing/*.md", { eager: true }))
   .map((p: any) => ({ ...p.frontmatter, url: p.url }))
@@ -39,6 +42,23 @@ const posts = Object.values(import.meta.glob("./writing/*.md", { eager: true }))
       ))}
     </ol>
   </section>
+
+  {repos.length > 0 && (
+    <section aria-labelledby="github">
+      <h2 id="github"># recent on github</h2>
+      <ul class="writing">
+        {repos.map((r) => (
+          <li>
+            <span class="muted small">{r.pushed}</span>
+            <div>
+              <a href={r.url}>{r.name}</a>{r.stars > 0 && <span class="muted small"> ★ {r.stars}</span>}
+              {r.description && <div class="muted small">{r.description}</div>}
+            </div>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
 
   {posts.length > 0 && (
     <section aria-labelledby="writing">

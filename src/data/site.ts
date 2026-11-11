@@ -4,8 +4,9 @@
 export const site = {
   name: "[Your Name]",
   focus: "[One sentence on what you're building right now and for whom.]",
+  githubUser: "diwakar-bhagat", // feeds the "# recent on github" section
   links: [
-    { label: "github", href: "https://github.com/rawatankit006" },
+    { label: "github", href: "https://github.com/diwakar-bhagat" },
     { label: "x", href: "https://x.com/[handle]" },
     { label: "email", href: "mailto:[you@example.com]" },
   ],

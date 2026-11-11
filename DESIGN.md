@@ -42,6 +42,7 @@ Links are `--fg` with an underline in `--rule`; on hover the underline and text 
 - **Header**: name, one-sentence current focus, a row of plain-text links (`github`, `x`, `email`, `cv`), separated by ` / `.
 - **Now building**: one block. Project name, a status dot (`--accent`), one sentence on the problem, live link, stack written as plain text (`astro · cloudflare · postgres`).
 - **Shipped list**: numbered `01`, `02`, `03` in `--muted`. Each row: name (link), one line on what it does, and one hard metric or proof (stars, users, MRR, PR merged). If there is no metric, show the raw URL instead. Never a vague adjective.
+- **Recent on github**: after Shipped. Up to 6 latest-pushed public repos (no forks), fetched at build time and refreshed by a daily rebuild. Same row layout as Writing: push date (muted), repo link, `★ n` only if n > 0, description in muted small text. Hidden if the fetch fails or returns nothing.
 - **Writing list**: date (`YYYY-MM-DD`, muted) then title. Newest first.
 - **Footer**: one muted line. Last updated date and where the site is hosted.
 - **Article page**: same column, title, date, body. Code blocks use `--rule` background tint, no syntax-theme rainbow.
