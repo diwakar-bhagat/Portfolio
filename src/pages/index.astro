@@ -1,0 +1,53 @@
+---
+import Base from "../layouts/Base.astro";
+import { site, building, shipped } from "../data/site";
+
+const posts = Object.values(import.meta.glob("./writing/*.md", { eager: true }))
+  .map((p: any) => ({ ...p.frontmatter, url: p.url }))
+  .filter((p) => !p.draft)
+  .sort((a, b) => (a.date < b.date ? 1 : -1));
+---
+<Base>
+  <header>
+    <h1>{site.name}</h1>
+    <p>{site.focus}</p>
+    <p class="links small">
+      {site.links.map((l, i) => (
+        <>{i > 0 && <span> / </span>}<a href={l.href}>{l.label}</a></>
+      ))}
+    </p>
+  </header>
+
+  <section aria-labelledby="now">
+    <h2 id="now"># now building</h2>
+    <p><span class="dot" aria-hidden="true"></span><a href={building.url}><strong>{building.name}</strong></a> <span class="muted small">{building.status}</span></p>
+    <p>{building.problem}</p>
+    <p class="muted small">{building.stack.join(" · ")}</p>
+  </section>
+
+  <section aria-labelledby="shipped">
+    <h2 id="shipped"># shipped</h2>
+    <ol class="shipped">
+      {shipped.map((p, i) => (
+        <li>
+          <span class="n">{String(i + 1).padStart(2, "0")}</span>
+          <div>
+            <a href={p.url}>{p.name}</a>, {p.what}
+            <div class="muted small">{p.proof}</div>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  {posts.length > 0 && (
+    <section aria-labelledby="writing">
+      <h2 id="writing"># writing</h2>
+      <ul class="writing">
+        {posts.map((p) => (
+          <li><span class="muted small">{p.date}</span><a href={p.url}>{p.title}</a></li>
+        ))}
+      </ul>
+    </section>
+  )}
+</Base>
