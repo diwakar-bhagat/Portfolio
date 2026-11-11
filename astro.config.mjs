@@ -1,7 +1,7 @@
 import { defineConfig } from "astro/config";
 
-// Set `site` to your real domain once you have one (e.g. https://yourname.dev).
+// Canonical domain (used for absolute URLs, sitemap, og tags).
 export default defineConfig({
-  site: "https://example.com",
+  site: "https://diwakarbhagat.com",
   build: { inlineStylesheets: "always" },
 });

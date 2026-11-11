@@ -2,7 +2,7 @@
 // Anything in [brackets] is a placeholder waiting for real details.
 
 export const site = {
-  name: "[Your Name]",
+  name: "Diwakar Bhagat",
   focus: "[One sentence on what you're building right now and for whom.]",
   githubUser: "diwakar-bhagat", // feeds the "# recent on github" section
   links: [
