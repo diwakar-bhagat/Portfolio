@@ -1,64 +1,44 @@
 // All the content of the home page lives here. Edit this file, not the page.
-// Filled from the LinkedIn profile export (2026-11-11).
 
 export const site = {
   name: "Diwakar Bhagat",
   focus:
-    "AI engineer at ZenZebra. I build the layer between systems: the ERP, payment and automation plumbing that keeps a retail business running in real time.",
+    "AI Engineer at ZenZebra. I build AI native systems that keep D2C retail running, and I took Pine Labs payments live in production on Odoo 19 POS.",
   githubUser: "diwakar-bhagat", // feeds the "# recent on github" section
   links: [
     { label: "github", href: "https://github.com/diwakar-bhagat" },
     { label: "linkedin", href: "https://www.linkedin.com/in/diwakarbhagat" },
-    { label: "email", href: "mailto:diwakarkumarstudent@gmail.com" },
+    { label: "email", href: "mailto:diwakarbhagat.pro@gmail.com" },
   ],
   updated: "2026-11-12",
 };
 
 export const building = {
-  name: "ZenZebra retail stack",
+  name: "HireOX.AI",
   status: "live", // or "building"
   problem:
-    "Four lifestyle stores inside offices, coworking floors and clubs across Noida and Gurugram, where every bill, payment and stock movement has to land in the right place the moment it happens. I own the layer that connects it all and lead a three-person team.",
-  url: "https://www.zenzebra.in/",
-  sites: [
-    { label: "zenzebra.in", href: "https://www.zenzebra.in/" },
-    { label: "shop.zenzebra.in", href: "https://shop.zenzebra.in/" },
-  ],
-  stack: ["odoo 19", "next.js", "neon postgres", "pine labs", "whatsapp webhooks"],
-  side: {
-    name: "Insee",
-    text: "a trust-first platform helping visually impaired students in India find verified exam scribes.",
-  },
+    "People prepare for interviews alone and freeze when it counts. HireOX gives them AI mock interviews with structured scoring on every answer, so practice feels like the real thing.",
+  url: "https://hireox.in",
+  stack: ["react", "node.js", "postgres", "openrouter"],
 };
 
 export const shipped: { name: string; url?: string; what: string; proof: string }[] = [
   {
-    name: "HireOX.AI",
-    url: "https://hireox.in",
-    what: "AI mock interviews that plan from your resume and JD, adapt to your answers, and score clarity, depth and tradeoffs.",
-    proof: "~10 paying users · solo build, end to end",
+    name: "ZenZebra payments",
+    url: "https://zenzebra.in",
+    what: "Pine Labs payments on Odoo 19 POS: terminal and dynamic QR flows, with results written straight back into the POS.",
+    proof: "live in production stores",
   },
   {
-    name: "Pine Labs × Odoo POS",
-    url: "https://github.com/diwakar-bhagat/pinelabs",
-    what: "Card and dynamic-QR payments at ZenZebra counters, with results written back into Odoo POS.",
-    proof: "live in production",
+    name: "Pine Labs MCP",
+    url: "https://github.com/diwakar-bhagat",
+    what: "An MCP server that brings Pine Labs payment workflows to AI agents.",
+    proof: "built and in use",
   },
   {
-    name: "Retail Operating Intelligence",
-    what: "Founder dashboard on Odoo 19 data: revenue, AOV and units by store, brand, category and SKU.",
-    proof: "built for ZenZebra's founders",
-  },
-  {
-    name: "TA Apparels order tracker",
-    // ctaapparels.vercel.app returned 404 on 2026-11-11; linking the repo until it's back.
-    url: "https://github.com/diwakar-bhagat/CRM-FOR-APPAREL",
-    what: "Order tracking and production coordination for an apparel manufacturer, with role-based access per ops team.",
-    proof: "github.com/diwakar-bhagat/CRM-FOR-APPAREL",
-  },
-  {
-    name: "Sync under load",
-    what: "Reworked store-to-ERP sync around rate limits after shared API keys started hitting HTTP 429s mid-billing.",
-    proof: "fixed in production",
+    name: "ZenZebra D2C shop",
+    url: "https://shop.zenzebra.in",
+    what: "The direct to consumer storefront for ZenZebra, built and run end to end alongside a retail intelligence dashboard on live Odoo data.",
+    proof: "live",
   },
 ];
