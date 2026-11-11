@@ -10,6 +10,7 @@ export const site = {
     { label: "github", href: "https://github.com/diwakar-bhagat" },
     { label: "linkedin", href: "https://www.linkedin.com/in/diwakarbhagat" },
     { label: "email", href: "mailto:diwakarbhagat.pro@gmail.com" },
+    { label: "cv", href: "/resume.pdf" },
   ],
   updated: "2026-11-12",
 };
