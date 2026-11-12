@@ -2,8 +2,15 @@
 import Base from "../layouts/Base.astro";
 import { site, building, shipped } from "../data/site";
 import { recentRepos } from "../data/github";
+import { check, checkable, checkedOn } from "../data/health";
 
 const repos = await recentRepos();
+
+// Build-time live checks: every "live" claim gets verified when the page is built.
+const buildingCheck = checkable(building.url) ? await check(building.url) : null;
+const shippedChecked = await Promise.all(
+  shipped.map(async (p) => ({ ...p, check: checkable(p.url) ? await check(p.url) : null })),
+);
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 const withBase = (u: string) => (u.startsWith(base + "/") ? u : base + u);
@@ -12,75 +19,86 @@ const posts = Object.values(import.meta.glob("./writing/*.md", { eager: true }))
   .map((p: any) => ({ ...p.frontmatter, url: withBase(p.url) }))
   .filter((p) => !p.draft)
   .sort((a, b) => (a.date < b.date ? 1 : -1));
----
-<Base>
-  <header>
-    <h1>{site.name}</h1>
-    <p>{site.focus}</p>
-    <p class="links small">
-      {site.links.map((l, i) => (
-        <>{i > 0 && <span> / </span>}<a href={l.href}>{l.label}</a></>
-      ))}
-    </p>
-  </header>
 
-  <section aria-labelledby="now">
-    <h2 id="now"># now building</h2>
-    <p><span class="dot" aria-hidden="true"></span><a href={building.url}><strong>{building.name}</strong></a> <span class="muted small">{building.status}</span></p>
-    <p>{building.problem}</p>
-    {building.sites && (
-      <p class="links small">
-        {building.sites.map((l, i) => (
-          <>{i > 0 && <span> / </span>}<a href={l.href}>{l.label}</a></>
+const labels: Record<string, string> = { github: "GitHub", linkedin: "LinkedIn", email: "Email", cv: "CV" };
+const host = (u: string) => new URL(u).host.replace(/^www\./, "");
+---
+<Base hasGithub={repos.length > 0} hasWriting={posts.length > 0}>
+  <header class="tile">
+    <div class="wrap">
+      <h1 class="hero-display">{site.name}</h1>
+      <p class="lead">{site.focus}</p>
+      <p class="cta">
+        {site.links.map((l, i) => (
+          <a class:list={["pill", { ghost: i > 0 }]} href={l.href}>{labels[l.label] ?? l.label}</a>
         ))}
       </p>
-    )}
-    <p class="muted small">{building.stack.join(" · ")}</p>
-    {building.side && (
-      <p class="muted small">on the side: <strong>{building.side.name}</strong>, {building.side.text}</p>
-    )}
+    </div>
+  </header>
+
+  <section class="tile dark" id="building" aria-labelledby="building-h">
+    <div class="wrap">
+      <p class="tagline muted">Now building · {building.status}</p>
+      <h2 class="display-lg" id="building-h">{building.name}</h2>
+      <p class="lead-airy">{building.problem}</p>
+      <p class="cta"><a class="pill" href={building.url}>Visit {host(building.url)}</a></p>
+      <p class="caption muted">{building.stack.join(" · ")}</p>
+      {buildingCheck && (
+        <p class="caption muted"><span class:list={["tick", { down: !buildingCheck.ok }]}>{buildingCheck.ok ? "✓" : "✗"}</span> {buildingCheck.host} answered {buildingCheck.status} · checked {checkedOn}</p>
+      )}
+    </div>
   </section>
 
-  <section aria-labelledby="shipped">
-    <h2 id="shipped"># shipped</h2>
-    <ol class="shipped">
-      {shipped.map((p, i) => (
-        <li>
-          <span class="n">{String(i + 1).padStart(2, "0")}</span>
-          <div>
-            {p.url ? <a href={p.url}>{p.name}</a> : <strong>{p.name}</strong>}, {p.what}
-            <div class="muted small">{p.proof}</div>
-          </div>
-        </li>
-      ))}
-    </ol>
+  <section class="tile parchment" id="shipped" aria-labelledby="shipped-h">
+    <div class="wrap wide">
+      <h2 class="display-lg" id="shipped-h">Shipped</h2>
+      <ol class="cards">
+        {shippedChecked.map((p) => (
+          <li class="card">
+            <h3 class="tagline">{p.name}</h3>
+            <p>{p.what}</p>
+            <p class="caption muted">
+              {p.proof}
+              {p.check && (
+                <><br /><span class:list={["tick", { down: !p.check.ok }]}>{p.check.ok ? "✓" : "✗"}</span> {p.check.host} answered {p.check.status} · checked {checkedOn}</>
+              )}
+            </p>
+            <p><a href={p.url}>{host(p.url)} ›</a></p>
+          </li>
+        ))}
+      </ol>
+    </div>
   </section>
 
   {repos.length > 0 && (
-    <section aria-labelledby="github">
-      <h2 id="github"># recent on github</h2>
-      <ul class="writing">
-        {repos.map((r) => (
-          <li>
-            <span class="muted small">{r.pushed}</span>
-            <div>
-              <a href={r.url}>{r.name}</a>{r.stars > 0 && <span class="muted small"> ★ {r.stars}</span>}
-              {r.description && <div class="muted small">{r.description}</div>}
-            </div>
-          </li>
-        ))}
-      </ul>
+    <section class="tile" id="github" aria-labelledby="github-h">
+      <div class="wrap">
+        <h2 class="display-lg" id="github-h">Recent on GitHub</h2>
+        <ul class="rows">
+          {repos.map((r) => (
+            <li>
+              <span class="caption muted">{r.pushed}</span>
+              <div>
+                <a class="body-strong" href={r.url}>{r.name}</a>{r.stars > 0 && <span class="caption muted"> ★ {r.stars}</span>}
+                {r.description && <div class="caption muted">{r.description}</div>}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
     </section>
   )}
 
   {posts.length > 0 && (
-    <section aria-labelledby="writing">
-      <h2 id="writing"># writing</h2>
-      <ul class="writing">
-        {posts.map((p) => (
-          <li><span class="muted small">{p.date}</span><a href={p.url}>{p.title}</a></li>
-        ))}
-      </ul>
+    <section class="tile dark-2" id="writing" aria-labelledby="writing-h">
+      <div class="wrap">
+        <h2 class="display-lg" id="writing-h">Writing</h2>
+        <ul class="rows">
+          {posts.map((p) => (
+            <li><span class="caption muted">{p.date}</span><a class="body-strong" href={p.url}>{p.title}</a></li>
+          ))}
+        </ul>
+      </div>
     </section>
   )}
 </Base>
